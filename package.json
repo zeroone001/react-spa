@@ -23,7 +23,10 @@
     "rctui": "^0.7.15",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-redux": "^5.0.4",
     "react-router-dom": "^4.1.1",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0",
     "refetch": "^0.2.4"
   },
   "devDependencies": {
