@@ -2,7 +2,17 @@ import React, {
     Component
 } from 'react';
 import ReactDOM from 'react-dom';
-
+import {
+    Provider
+} from 'react-redux'
 import App from './App.js';
 
-ReactDOM.render(<App />, document.getElementById('root'))
+import store from './store';
+
+ReactDOM.render(
+    <Provider store={store}>
+    <App />
+  </Provider>,
+    document.getElementById('root'))
+
+module.hot && module.hot.accept()

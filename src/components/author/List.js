@@ -1,51 +1,37 @@
-import React, {
-    Component
-} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import {
-    Table,
-    Card
+    Card,
+    Button
 } from 'rctui'
-import fetch from 'refetch';
+import queryString from 'query-string'
+import TableList from './TableList'
 
-class List extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: {
-                list: []
-            }
-        }
-    }
+function List(props) {
+    const {
+        history
+    } = props
 
-    componentWillMount() {
-        fetch.get('/authorlist.json').then((res) => {
-            // 实际项目中，这里最好判断一下组件是否已经unmounted
-            this.setState({
-                data: res.data
-            })
-        })
-    }
-    render() {
-        // 这里可以根据data的状态，返回其它内容，例如
-        // if (!this.state.data) return <Loading />
+    const query = queryString.parse(history.location.search)
+    if (!query.size) query.size = 10
 
-        return (
-            <Card>
-                <Card.Header>作者列表</Card.Header>
-                <Table
-                  data={this.state.data.list}
-                  columns={[
-                    { name: 'id', header: 'ID' },
-                    { name: 'name', header: '姓名' },
-                    { name: 'nationality', header: '国籍' },
-                    { name: 'birthday', header: '生日' },
-                  ]}
-                />
-            </Card>
-        )
-    }
+    return (
+        <Card>
+      <Card.Header>作者列表</Card.Header>
+      <div style={{ padding: 12 }}>
+        <Button status="success" onClick={() => history.push('/author/new')}>添加作者</Button>
+      </div>
 
+      <TableList
+        history={history}
+        fetch={{ url: '/api/authorlist', data: query }}
+      />
+    </Card>
+    )
+}
 
+List.propTypes = {
+    history: PropTypes.object.isRequired,
 }
 
 export default List
